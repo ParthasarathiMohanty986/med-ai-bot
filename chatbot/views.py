@@ -5,8 +5,14 @@ import google.generativeai as genai
 # IMPORTANT: Disclaimer - Clearly state the limitations
 DISCLAIMER = "This chatbot is for informational purposes only and DOES NOT provide medical advice. Consult a healthcare professional for any health concerns."
 
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
+
 # ✅ Set your Gemini API Key
-GEMINI_API_KEY = "AIzaSyAfvGDLeFCsQoKa-3VGhIFC0UgLvRQbAbE"  # Replace with your actual API key
+GEMINI_API_KEY = os.getenv("MEDCHATBOT_API_KEY")  # Replace with your actual API key
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Load Gemini model
