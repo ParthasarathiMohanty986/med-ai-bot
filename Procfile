@@ -1,1 +1,1 @@
-web: gunicorn MedAI.wsgi --log-file -
+web: gunicorn medibot.wsgi --log-file -
