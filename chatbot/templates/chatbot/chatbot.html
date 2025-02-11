@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💊 MedAI Chatbot | Your Health Assistant</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'chatbot/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>🩺 MedAI Chatbot 🩺</h2>
+        
+        <div id="chatbox">
+            <div class="chat-message bot">Welcome! Ask me anything.</div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="typingIndicator" class="typing" style="display: none;">Bot is typing...</div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let input = document.getElementById("userInput");
+            let message = input.value.trim();
+            if (!message) return;
+
+            let chatbox = document.getElementById("chatbox");
+
+            // User message
+            let userMsg = document.createElement("div");
+            userMsg.classList.add("chat-message", "user");
+            userMsg.innerText = `You: ${message}`;
+            chatbox.appendChild(userMsg);
+
+            // Show typing indicator
+            let typingIndicator = document.getElementById("typingIndicator");
+            typingIndicator.style.display = "block";
+
+            fetch(`/chatbot/get-response/?message=${encodeURIComponent(message)}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide typing indicator
+                    typingIndicator.style.display = "none";
+
+                    let botMsg = document.createElement("div");
+                    botMsg.classList.add("chat-message", "bot");
+                    botMsg.innerText = `Bot: ${data.response}`;
+                    chatbox.appendChild(botMsg);
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                })
+                .catch(() => {
+                    typingIndicator.style.display = "none";
+                    let errorMsg = document.createElement("div");
+                    errorMsg.classList.add("chat-message", "error");
+                    errorMsg.innerText = "Bot: Error fetching response.";
+                    chatbox.appendChild(errorMsg);
+                });
+
+            input.value = "";
+        }
+
+        // Allow sending message with Enter key
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+    <!-- <footer style="background-color: #dbeafe; color: black; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%;">
+        &copy; 2024 Partha Sarathi Mohanty. All Rights Reserved.
+    </footer> -->
+    
+
+    
+</body>
+</html>
