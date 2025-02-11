@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)0-wp6lgul_=qx7h%rvjh*u#&*#*r@#2ggz!6msz0-idf!xe=7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -125,9 +125,21 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+
 import os
 
 STATIC_URL = '/static/'
+
+# Collect static files in one place for production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Directories where Django will look for static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'chatbot/static'),  # ✅ Django finds static files here
+    os.path.join(BASE_DIR, 'chatbot/static'),  # If you have custom static files inside your app
 ]
+
+# Enable WhiteNoise to serve static files efficiently
+INSTALLED_APPS.append('whitenoise.runserver_nostatic')
+
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
