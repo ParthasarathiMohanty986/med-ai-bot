@@ -19,7 +19,14 @@ MedAI is an AI-powered chatbot that provides basic medical assistance and health
 🔹 API Integration: Gemini AI API  
 🔹 Deployment: Render  
 
+ ⚠️ Important Note  
+MedAI Chatbot is designed **only** for answering medical-related queries.  
+It will not respond to non-medical questions.  
+
 Demo--> <img width="830" alt="image" src="https://github.com/user-attachments/assets/55c2b257-0286-4d7c-b494-bdf427fbc4fc" />
-(Answers only medical queries)
+        <img width="764" alt="image" src="https://github.com/user-attachments/assets/90c59f53-67b3-4ff7-82de-3051bea06f40" />
+
+
+
 
 
